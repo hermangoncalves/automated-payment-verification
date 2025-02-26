@@ -1,8 +1,9 @@
 import yaml
 import os
 from typing import Dict, Any
+import sys
 
-def load_config(config_path: str = "config/config.yaml") -> Dict[str, Any]:
+def load_config(config_path: str = None) -> Dict[str, Any]:
     """
     Load configuration from a YAML file
 
@@ -15,7 +16,13 @@ def load_config(config_path: str = "config/config.yaml") -> Dict[str, Any]:
     Raises:
         FileNotFoundError: If the config file doesn't exist.
         yaml.YAMLError: If the YAML file is malformed
-    """
+    # """
+    if config_path is None:
+        # Get the directory of this script (utils/)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        # Move up one level to the project root and into config/
+        config_path = os.path.join(script_dir, "..", "config", "config.yaml")
+    
 
     if not os.path.exists(config_path):
         raise FileNotFoundError(f"Configuration file not found at {config_path}")
