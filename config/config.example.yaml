@@ -16,3 +16,8 @@ notifications:
   telegram:
     bot_token: telegramm_bot_token
     chat_id: your_telegram_chat_id
+filtering:
+  subject_keywords: [""]
+  sender_domains: [""]
+  fetch_unread_only: true
+  time_window_minutes: 60 # Fetch email from the last x minutes
