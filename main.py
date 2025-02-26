@@ -1,4 +1,6 @@
+#!/home/herman/Projects/automated-payment-verification/venv/bin/python
 import sys
+from utils.notification import send_telegram_notification
 from utils.config_loader import load_config, validate_config
 from utils.email_utils import (
     connect_to_email, 
@@ -21,6 +23,7 @@ def main():
             details = parse_email_content(email_data, config)
             print(f"Email ID: {email_data['id']}, Details: {details}")
             if details:  # Mark as read only if successfully parsed
+                send_telegram_notification(config, details)
                 mark_email_as_read(mail, email_data["id"])
 
         print(f"IMAP Server: {config['email']['imap_server']}")
