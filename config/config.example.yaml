@@ -1,0 +1,18 @@
+email:
+  imap_server: imap.gmail.com
+  username: your_email@gmail.com
+  password: your_app_password
+google_sheets:
+  spreadsheet_id: your_spreadsheet_id
+  credentials_file: config/credentials.json
+parsing_rules:
+  bank1:
+    transaction_id: ""
+    client_name: ""
+    amount_paid: ""
+    payment_date: ""
+    bank_reference: ""
+notifications:
+  telegram:
+    bot_token: telegramm_bot_token
+    chat_id: your_telegram_chat_id
