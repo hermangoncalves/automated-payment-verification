@@ -6,12 +6,13 @@ google_sheets:
   spreadsheet_id: your_spreadsheet_id
   credentials_file: config/credentials.json
 parsing_rules:
-  bank1:
-    transaction_id: ""
-    client_name: ""
-    amount_paid: ""
-    payment_date: ""
-    bank_reference: ""
+  BCA:
+    transaction_id: "Número de Documento" 
+    client_name: "1º Titular da conta ordenante"
+    amount_paid: "Valor do movimento"
+    payment_date: "Data-valor"
+    bank_reference: "Conta do beneficiário"
+    description: "Descritivo do movimento"
 notifications:
   telegram:
     bot_token: telegramm_bot_token

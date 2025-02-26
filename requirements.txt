@@ -1,1 +1,5 @@
+beautifulsoup4==4.13.3
+PyPDF2==3.0.1
 PyYAML==6.0.2
+soupsieve==2.6
+typing_extensions==4.12.2
