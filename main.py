@@ -1,6 +1,12 @@
 import sys
 from utils.config_loader import load_config, validate_config
-from utils.email_utils import connect_to_email, disconnect_from_email, fetch_emails, parse_email_content
+from utils.email_utils import (
+    connect_to_email, 
+    disconnect_from_email, 
+    fetch_emails, 
+    parse_email_content, 
+    mark_email_as_read
+)
 
 def main():
     try:
@@ -13,8 +19,9 @@ def main():
         emails = fetch_emails(mail, config)
         for email_data in emails:
             details = parse_email_content(email_data, config)
-            print(f"Email ID: {email_data['id']}, Subject: {email_data['subject']}")
-            print(f"Parsed Details: {details}")
+            print(f"Email ID: {email_data['id']}, Details: {details}")
+            if details:  # Mark as read only if successfully parsed
+                mark_email_as_read(mail, email_data["id"])
 
         print(f"IMAP Server: {config['email']['imap_server']}")
         print(f"Running with Python: {sys.version}")

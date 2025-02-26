@@ -74,13 +74,13 @@ def fetch_emails(mail: imaplib.IMAP4_SSL, config: dict) -> List[Dict[str, Any]]:
     fetch_unread = config.get('filtering', {}).get('fetch_unread_only', False)
     time_window = config.get('filtering', {}).get('time_window_minutes', None)
     
-    print(fetch_unread)
-    
-    if time_window:
+    if time_window and fetch_unread:
         since_date = (datetime.now() - timedelta(minutes=time_window)).strftime("%d-%b-%Y")
-        search_criteria = f'SINCE {since_date}'
+        search_criteria = f'UNSEEN SINCE {since_date}'
+    elif fetch_unread:
+        search_criteria = 'UNSEEN'
     else:
-        search_criteria = 'UNSEEN' if fetch_unread else 'ALL'
+        search_criteria = 'ALL' if not time_window else f'SINCE {(datetime.now() - timedelta(minutes=time_window)).strftime("%d-%b-%Y")}'
         
     status, email_ids = mail.search(None, search_criteria)
     if status != 'OK':
@@ -208,7 +208,24 @@ def extract_details(content: str, rules: Dict[str, str]) -> Dict[str, Any]:
         if match:
             details[field] = match.group(1).strip()
     return details
+
+
+def mark_email_as_read(mail: imaplib.IMAP4_SSL, email_id: str) -> None:
+    """
+    Mark an email as read by setting the \Seen flag.
     
+    Args:
+        mail (imaplib.IMAP4_SSL): Connected IMAP client.
+        email_id (str): Email ID to mark as read.
+    """
+    try:
+        status, _ = mail.store(email_id, "+FLAGS", "\Seen")
+        if status == "OK":
+            print(f"Marked Email ID {email_id} as read")
+        else:
+            print(f"Failed to mark Email ID {email_id} as read")
+    except imaplib.IMAP4.error as e:
+        print(f"Error marking email as read: {e}")
         
 if __name__ == "__main__":
     # Test the parsing
