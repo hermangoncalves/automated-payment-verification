@@ -1,5 +1,7 @@
 # Automated Payment Verification System
 
+![Workflow Diagram](assets/diagram.jpg)
+
 ## Overview
 The **Automated Payment Verification System** is a Python-based tool designed to streamline the process of tracking and verifying client payments received via bank transaction emails. It automates the extraction of payment details from emails, sends notifications via Telegram, and is scheduled to run periodically to ensure timely updates. Built with modularity and extensibility in mind, this system aims to reduce manual effort and improve accuracy in payment reconciliation.
 
