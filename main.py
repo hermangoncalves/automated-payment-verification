@@ -1,4 +1,5 @@
-#!/home/herman/Projects/automated-payment-verification/venv/bin/python
+import logging
+from utils.database import load_client_database
 import sys
 from utils.notification import send_telegram_notification
 from utils.config_loader import load_config, validate_config
@@ -15,6 +16,9 @@ def main():
         config = load_config()
         validate_config(config)
         print("Payment Verification System initialized")
+        
+        clients = load_client_database()
+        logging.info(f"Client database loaded with {len(clients)} records")
 
         # Connect, fetch, and parse emails
         mail = connect_to_email(config)
