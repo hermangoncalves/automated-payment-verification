@@ -13,6 +13,7 @@ parsing_rules:
 notifications:
   webhook:
     url: "https://your-app"
+    secret: "a4068a851287fea15eaf16643083d2766"  
 filtering:
   subject_keywords: [""]
   sender_domains: [""]

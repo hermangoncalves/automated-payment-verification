@@ -26,9 +26,14 @@ def send_webhook_notification(config: Dict[str, Any], payment_details: Dict[str,
     
     webhook_config = config.get('notifications', {}).get('webhook', {})
     url = webhook_config.get('url')
-    
+    secret = webhook_config.get('secret')
+
     if not url:
         logger.warning("Webhook notification skipped: URL not configured in config.yaml")
+        return False
+    
+    if not secret:
+        logger.warning("Webhook notification skipped: Secret token not configured in config.yaml")
         return False
     
     payload = {
@@ -37,11 +42,16 @@ def send_webhook_notification(config: Dict[str, Any], payment_details: Dict[str,
         "timestamp": datetime.now(timezone.utc).isoformat() + "Z"
     }
     
+    headers = {
+        "Content-Type": "application/json",
+        "X-Webhook-Secret": secret
+    }
     try:
+        
         response = requests.post(
             url,
             data=json.dumps(payload),
-            headers={"Content-Type": "application/json"},
+            headers=headers,
             timeout=10
         )
         

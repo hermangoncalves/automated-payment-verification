@@ -20,6 +20,8 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
+EXPECTED_SECRET = "a4068a851287fea15eaf16643083d276"
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
@@ -31,6 +33,11 @@ def webhook():
     Logs the payload and returns a success response.
     """
     try:
+        received_secret = request.headers.get("X-Webhook-Secret")
+        if not received_secret or received_secret != EXPECTED_SECRET:
+            logger.error(f"Invalid or missing X-Webhook-Secret: {received_secret}")
+            return jsonify({"error": "Invalid webhook secret"}), 401
+        
         payload = request.get_json()
         if not payload:
             logger.error('❌ No JSON payload received')
