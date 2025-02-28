@@ -2,9 +2,6 @@ email:
   imap_server: imap.gmail.com
   username: your_email@gmail.com
   password: your_app_password
-google_sheets:
-  spreadsheet_id: your_spreadsheet_id
-  credentials_file: config/credentials.json
 parsing_rules:
   BCA:
     transaction_id: "Número de Documento" 
