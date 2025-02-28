@@ -14,9 +14,8 @@ parsing_rules:
     bank_reference: "Conta do beneficiário"
     description: "Descritivo do movimento"
 notifications:
-  telegram:
-    bot_token: telegramm_bot_token
-    chat_id: your_telegram_chat_id
+  webhook:
+    url: "https://your-app"
 filtering:
   subject_keywords: [""]
   sender_domains: [""]
